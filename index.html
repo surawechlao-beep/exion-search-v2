@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- Cache control: ให้ browser โหลด HTML ใหม่ทุกครั้ง (ไม่ cache) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Exion">
+<meta name="theme-color" content="#231F20" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f0d0e" media="(prefers-color-scheme: dark)">
+<title>Exion Thailand · v7.1</title>
+<link rel="manifest" href='data:application/manifest+json,{"name":"Exion Thailand","short_name":"Exion","start_url":".","display":"standalone","background_color":"%23231F20","theme_color":"%23B7081D","icons":[{"src":"data:image/svg+xml;utf8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 192 192%27%3E%3Crect width=%27192%27 height=%27192%27 fill=%27%23231F20%27/%3E%3Ctext x=%2796%27 y=%27120%27 font-family=%27Georgia,serif%27 font-size=%2790%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3Ctspan fill=%27%23B7081D%27%3Ex%3C/tspan%3E%3C/text%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --red:#B7081D;
+  --red2:#8f0616;
+  --red-light:rgba(183,8,29,0.08);
+  --dark:#231F20;
+  --dark2:#1a1718;
+  --bg:#F5F5F5;
+  --surface:#ffffff;
+  --surface2:#fafafa;
+  --border:#E8E8E8;
+  --border2:#D8D8D8;
+  --text:#231F20;
+  --text2:#3a3535;
+  --text3:#7a7070;
+  --text4:#b0a8a8;
+  --green:#1a7a4a;
+  --green-bg:rgba(26,122,74,0.1);
+  --amber:#c45c00;
+  --amber-bg:rgba(196,92,0,0.1);
+  --blue:#0b5394;
+  --blue-bg:rgba(11,83,148,0.08);
+  --sans:"Kanit",sans-serif;
+  --r:8px;--r2:12px;
+  --shadow:0 1px 4px rgba(35,31,32,0.08),0 4px 16px rgba(35,31,32,0.06);
+  --shadow-lg:0 4px 12px rgba(35,31,32,0.1),0 12px 32px rgba(35,31,32,0.08);
+  --st:env(safe-area-inset-top,0px);
+  --sb:env(safe-area-inset-bottom,0px);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark){
+  :root.auto-theme{
+    --bg:#0f0d0e;
+    --surface:#1a1718;
+    --surface2:#221e1f;
+    --border:#2a2526;
+    --border2:#3a3334;
+    --text:#f0ebec;
+    --text2:#d5cece;
+    --text3:#8a8080;
+    --text4:#605a5b;
+    --red-light:rgba(183,8,29,0.18);
+    --green-bg:rgba(26,122,74,0.22);
+    --amber-bg:rgba(196,92,0,0.22);
+    --blue-bg:rgba(11,83,148,0.22);
+    --shadow:0 1px 4px rgba(0,0,0,0.3),0 4px 16px rgba(0,0,0,0.2);
+    --shadow-lg:0 4px 12px rgba(0,0,0,0.4),0 12px 32px rgba(0,0,0,0.3);
+  }
+}
+:root.dark{
+  --bg:#0f0d0e;--surface:#1a1718;--surface2:#221e1f;
+  --border:#2a2526;--border2:#3a3334;
+  --text:#f0ebec;--text2:#d5cece;--text3:#8a8080;--text4:#605a5b;
+  --red-light:rgba(183,8,29,0.18);
+  --green-bg:rgba(26,122,74,0.22);
+  --amber-bg:rgba(196,92,0,0.22);
+  --blue-bg:rgba(11,83,148,0.22);
+  --shadow:0 1px 4px rgba(0,0,0,0.3),0 4px 16px rgba(0,0,0,0.2);
+  --shadow-lg:0 4px 12px rgba(0,0,0,0.4),0 12px 32px rgba(0,0,0,0.3);
+}
+
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5;padding-bottom:calc(68px + var(--sb));-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+/* ═══════════════════════ Login Screen ═══════════════════════ */
+#loginScreen{position:fixed;inset:0;background:var(--dark);z-index:1000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+#loginScreen.show{display:flex;}
+.lg-logo{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:36px;}
+.lg-logomark{font-family:Georgia,serif;font-size:46px;font-weight:700;color:#fff;letter-spacing:-1px;line-height:1;}
+.lg-logomark span{color:var(--red);}
+.lg-sub{color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-weight:300;}
+.lg-div{width:40px;height:2px;background:var(--red);margin-top:4px;}
+.lg-card{width:100%;max-width:320px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:24px;}
+.lg-label{display:block;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;font-weight:500;}
+.lg-input{width:100%;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:12px 14px;font-family:var(--sans);font-size:15px;color:#fff;outline:none;transition:border-color 0.2s;}
+.lg-input:focus{border-color:var(--red);}
+.lg-btn{width:100%;background:var(--red);border:none;color:#fff;font-family:var(--sans);font-size:14px;font-weight:600;padding:12px;border-radius:6px;cursor:pointer;margin-top:14px;letter-spacing:0.04em;text-transform:uppercase;transition:background 0.15s;}
+.lg-btn:hover{background:var(--red2);}
+.lg-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.lg-err{color:#ff6b6b;font-size:12px;margin-top:12px;text-align:center;display:none;}
+.lg-err.show{display:block;}
+.lg-foot{margin-top:24px;color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:0.06em;text-align:center;}
+
+/* ═══════════════════════ Loading ═══════════════════════ */
+#loading{position:fixed;inset:0;background:var(--dark);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity 0.4s;}
+#loading.hide{opacity:0;pointer-events:none;}
+.ld-logo{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.ld-logomark{font-family:Georgia,serif;font-size:42px;font-weight:700;color:#fff;letter-spacing:-1px;line-height:1;}
+.ld-logomark span{color:var(--red);}
+.ld-sub-brand{color:rgba(255,255,255,0.5);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-weight:300;}
+.ld-divider{width:40px;height:2px;background:var(--red);}
+.ld-track{width:160px;height:2px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;}
+.ld-fill{height:100%;background:var(--red);border-radius:2px;width:0;transition:width 0.5s ease;}
+.ld-status{color:rgba(255,255,255,0.3);font-size:11px;letter-spacing:0.06em;font-weight:300;}
+
+/* ═══════════════════════ Header ═══════════════════════ */
+.hdr{background:var(--surface);position:sticky;top:0;z-index:100;padding-top:var(--st);border-bottom:1px solid var(--border);box-shadow:0 2px 8px rgba(35,31,32,0.06);}
+.hdr-bar{height:3px;background:var(--red);}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 0;gap:8px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-logo{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.5px;line-height:1;}
+.brand-logo span{color:var(--red);}
+.brand-th{color:var(--text3);font-size:9px;letter-spacing:0.18em;text-transform:uppercase;font-weight:300;margin-top:1px;}
+.hdr-actions{display:flex;gap:6px;align-items:center;}
+.icon-btn{display:flex;align-items:center;justify-content:center;background:var(--surface2);border:1px solid var(--border2);color:var(--text3);width:30px;height:28px;border-radius:4px;cursor:pointer;padding:0;transition:background 0.15s;}
+.icon-btn:hover{background:var(--border);}
+.icon-btn.on{background:var(--red-light);border-color:var(--red);color:var(--red);}
+.sync-btn{display:flex;align-items:center;gap:5px;background:var(--surface2);border:1px solid var(--border2);color:var(--text3);font-family:var(--sans);font-size:10px;font-weight:500;padding:6px 12px;border-radius:4px;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase;}
+.sync-btn.spin svg{animation:rot 0.8s linear infinite;}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* Offline banner */
+.offline-banner{display:none;background:var(--amber-bg);color:var(--amber);font-size:11px;font-weight:500;padding:6px 18px;text-align:center;border-bottom:1px solid var(--border);letter-spacing:0.02em;}
+.offline-banner.show{display:block;}
+.offline-banner::before{content:"●";margin-right:6px;}
+
+/* Pull-to-refresh */
+#ptr{position:absolute;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.2s;margin-top:calc(var(--st) + 3px);}
+#ptr.show{opacity:1;}
+.ptr-spinner{width:22px;height:22px;border:2px solid var(--border2);border-top-color:var(--red);border-radius:50%;animation:rot 0.8s linear infinite;}
+
+/* Search */
+.search-wrap{padding:12px 18px 0;}
+.search-field{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:9px 13px;transition:border-color 0.2s;}
+.search-field:focus-within{border-color:var(--red);background:var(--surface);}
+.search-field svg{flex-shrink:0;color:var(--text4);}
+.search-input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--sans);font-size:14px;font-weight:400;min-width:0;}
+.search-input::placeholder{color:var(--text4);}
+.x-btn{display:none;background:var(--border);border:none;color:var(--text3);border-radius:50%;width:16px;height:16px;font-size:9px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;}
+.x-btn.show{display:flex;}
+
+/* Tabs */
+.tabs{display:flex;padding:10px 8px 0;gap:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 10px 11px;border:none;background:transparent;font-family:var(--sans);font-size:10px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;}
+.tab.on{color:var(--red);border-bottom-color:var(--red);}
+.tab-n{font-size:9px;background:var(--border);padding:2px 5px;border-radius:4px;font-family:var(--sans);color:var(--text3);}
+.tab.on .tab-n{background:var(--red);color:#fff;}
+
+/* Filter bar */
+.filter-bar{padding:8px 18px 6px;overflow-x:auto;display:flex;gap:6px;scrollbar-width:none;background:var(--bg);border-bottom:1px solid var(--border);flex-wrap:nowrap;}
+.filter-bar::-webkit-scrollbar{display:none;}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:4px;border:1px solid var(--border2);background:var(--surface);font-family:var(--sans);font-size:11px;font-weight:400;color:var(--text3);cursor:pointer;white-space:nowrap;flex-shrink:0;letter-spacing:0.02em;}
+.chip.on{background:var(--red-light);border-color:var(--red);color:var(--red);}
+.chip.sort-chip{background:var(--blue-bg);border-color:var(--blue);color:var(--blue);}
+.chip svg{width:10px;height:10px;}
+
+/* Content */
+.content{padding:14px 18px;}
+
+/* KPIs */
+.kpis{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}
+.kpis::-webkit-scrollbar{display:none;}
+.kpi{background:var(--surface);border-radius:var(--r);padding:10px 14px;flex-shrink:0;min-width:90px;border:1px solid var(--border);border-left:3px solid var(--red);box-shadow:var(--shadow);}
+.kpi-v{font-size:20px;font-weight:600;color:var(--text);line-height:1;font-family:var(--sans);}
+.kpi-l{font-size:9px;color:var(--text3);margin-top:3px;text-transform:uppercase;letter-spacing:0.06em;font-weight:400;}
+
+/* Info */
+.info{font-size:11px;color:var(--text3);margin-bottom:10px;letter-spacing:0.01em;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.info strong{color:var(--text2);font-weight:600;}
+.export-link{color:var(--red);font-size:11px;font-weight:500;cursor:pointer;letter-spacing:0.02em;display:flex;align-items:center;gap:4px;background:none;border:none;font-family:var(--sans);padding:0;}
+.export-link:hover{text-decoration:underline;}
+
+/* Card */
+.card{background:var(--surface);border-radius:var(--r2);margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;-webkit-tap-highlight-color:transparent;overflow:hidden;transition:box-shadow 0.15s,transform 0.12s;}
+.card:active{transform:scale(0.988);box-shadow:none;}
+.card-accent{height:3px;background:var(--red);}
+.card-top{padding:13px 14px 10px;}
+.card-name{font-size:15px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:4px;}
+.card-name .quick-link{color:var(--red);cursor:pointer;text-decoration:underline;text-decoration-color:transparent;transition:text-decoration-color 0.15s;}
+.card-name .quick-link:hover{text-decoration-color:var(--red);}
+.card-meta{font-size:12px;color:var(--text3);display:flex;align-items:center;gap:5px;font-weight:400;flex-wrap:wrap;}
+.dot{color:var(--border2);}
+.card-rows{padding:4px 14px 10px;background:var(--surface);border-top:1px solid var(--border);}
+.cr{display:flex;justify-content:space-between;align-items:center;padding:7px 8px;border-radius:6px;margin:2px 0;}
+.cr:nth-child(odd){background:var(--surface2);}
+.cr:nth-child(even){background:var(--surface);}
+.cl{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0;margin-right:8px;}
+.cv{font-size:13px;color:var(--text);text-align:right;max-width:55vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;}
+.cv.s{font-family:var(--sans);}
+
+/* Badge */
+.bdg{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;white-space:nowrap;}
+.bdg::before{content:"";width:4px;height:4px;border-radius:50%;background:currentColor;}
+.b-ok{background:var(--green-bg);color:var(--green);}
+.b-late{background:var(--amber-bg);color:var(--amber);}
+.b-other{background:var(--red-light);color:var(--red);}
+.b-due{background:var(--blue-bg);color:var(--blue);}
+.b-overdue{background:var(--red-light);color:var(--red);}
+/* Date badge — larger, structured 2-line badge for PO cards */
+.bdg-date{display:inline-block;padding:4px 8px;border-radius:4px;font-family:var(--sans);line-height:1.2;white-space:nowrap;border:1px solid transparent;text-align:right;min-width:60px;}
+.bdg-date.b-due{background:var(--blue-bg);color:var(--blue);border-color:rgba(11,83,148,0.2);}
+.bdg-date.b-overdue{background:var(--red-light);color:var(--red);border-color:rgba(183,8,29,0.25);}
+.bdg-date.b-late{background:var(--amber-bg);color:var(--amber);border-color:rgba(196,92,0,0.25);}
+.bdg-date-top{display:block;font-size:8px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;opacity:0.85;}
+.bdg-date-main{display:block;font-size:11px;font-weight:700;letter-spacing:0.02em;margin-top:1px;}
+.bdg-date-sub{display:block;font-size:8px;font-weight:600;letter-spacing:0.04em;opacity:0.8;margin-top:1px;}
+
+/* Product chip (S/N / Model) */
+.pchip{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);padding:2px 6px;border-radius:3px;font-weight:500;letter-spacing:0.02em;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+.pchip-label{font-size:8px;font-weight:700;color:var(--text4);letter-spacing:0.08em;text-transform:uppercase;}
+.pchip-value{color:var(--text2);font-weight:600;}
+.pchip-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+
+mark{background:#ffe082;color:#231F20;border-radius:2px;padding:0 1px;}
+
+/* Empty */
+.empty{text-align:center;padding:56px 20px;}
+.empty-icon{font-size:36px;margin-bottom:10px;opacity:0.25;}
+.empty h3{font-size:15px;font-weight:600;color:var(--text2);margin-bottom:4px;}
+.empty p{font-size:12px;color:var(--text3);font-weight:300;}
+
+/* Load more */
+.lm{text-align:center;padding:4px 0 12px;}
+.lm-btn{background:var(--surface);border:1px solid var(--border2);color:var(--red);font-family:var(--sans);font-size:13px;font-weight:500;padding:10px 24px;border-radius:var(--r);cursor:pointer;box-shadow:var(--shadow);letter-spacing:0.02em;}
+.lm-info{font-size:10px;color:var(--text4);margin-top:5px;letter-spacing:0.03em;}
+.sync-time{text-align:center;font-size:10px;color:var(--text4);padding:6px 0 2px;letter-spacing:0.04em;}
+
+/* Bottom nav */
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:2px solid var(--red);padding:6px 0 calc(6px + var(--sb));display:flex;}
+.dark .nav, :root.auto-theme .nav{background:rgba(26,23,24,0.94);}
+@media (prefers-color-scheme: dark){.nav{background:rgba(26,23,24,0.94);}}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 4px;cursor:pointer;border:none;background:transparent;-webkit-tap-highlight-color:transparent;}
+.nb svg{color:var(--text4);transition:transform 0.12s;}
+.nb:active svg{transform:scale(0.85);}
+.nb-l{font-size:8px;font-weight:600;color:var(--text4);letter-spacing:0.08em;text-transform:uppercase;}
+.nb.on svg{color:var(--red);}
+.nb.on .nb-l{color:var(--red);}
+
+/* Modal */
+.overlay{position:fixed;inset:0;z-index:300;background:rgba(35,31,32,0.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:flex-end;}
+.overlay.show{display:flex;animation:fi 0.2s ease;}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-height:88vh;overflow-y:auto;animation:su 0.3s cubic-bezier(0.32,0.72,0,1);padding-bottom:calc(20px + var(--sb));}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.m-top-bar{height:3px;background:var(--red);}
+.m-handle{width:32px;height:3px;background:var(--border2);border-radius:2px;margin:10px auto 0;}
+.m-hdr{padding:12px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.m-title{font-size:15px;font-weight:600;color:var(--text);flex:1;line-height:1.35;}
+.m-close{background:var(--bg);border:1px solid var(--border);border-radius:4px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);font-size:12px;flex-shrink:0;}
+.m-body{padding:14px 18px;}
+.m-sec{margin-bottom:18px;}
+.m-sec-t{font-size:9px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.m-sec-t::after{content:"";flex:1;height:1px;background:var(--border);}
+.m-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 10px;border-radius:6px;margin:2px 0;}
+.m-row:nth-child(odd){background:var(--surface2);}
+.m-row:nth-child(even){background:var(--surface);}
+.m-row:last-child{border:none;}
+.m-lbl{font-size:12px;color:var(--text3);flex-shrink:0;margin-right:12px;font-weight:400;}
+.m-val{font-size:13px;color:var(--text);text-align:right;word-break:break-word;max-width:58%;font-weight:600;}
+.m-val.t{font-family:var(--sans);}
+
+/* Filter sheet */
+.fo{position:fixed;inset:0;z-index:400;background:rgba(35,31,32,0.6);display:none;align-items:flex-end;}
+.fo.show{display:flex;animation:fi 0.2s ease;}
+.fs{background:var(--surface);border-radius:16px 16px 0 0;width:100%;max-height:82vh;overflow-y:auto;animation:su 0.3s cubic-bezier(0.32,0.72,0,1);padding-bottom:calc(16px + var(--sb));}
+.fs-top{height:3px;background:var(--red);}
+.fs-hdr{padding:10px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.fs-title{font-size:15px;font-weight:600;}
+.fs-body{padding:16px 18px;}
+.fs-sec{margin-bottom:18px;}
+.fs-sec-t{font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
+.fchips{display:flex;flex-wrap:wrap;gap:6px;}
+.fchip{display:inline-flex;align-items:center;padding:7px 13px;border-radius:6px;border:1px solid var(--border2);background:var(--surface);font-family:var(--sans);font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;white-space:nowrap;transition:all 0.15s;}
+.fchip.on{background:var(--red);border-color:var(--red);color:#fff;}
+.fchip.sort{background:var(--surface2);}
+.fchip.sort.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+.f-act{padding:12px 18px;display:flex;gap:8px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--surface);}
+.f-clr{flex:1;background:var(--surface);border:1px solid var(--border2);color:var(--text3);font-family:var(--sans);font-size:13px;font-weight:500;padding:10px;border-radius:var(--r);cursor:pointer;}
+.f-apply{flex:2;background:var(--red);border:none;color:#fff;font-family:var(--sans);font-size:13px;font-weight:600;padding:10px;border-radius:var(--r);cursor:pointer;}
+
+/* Dashboard */
+.dash{display:none;}
+.dash.show{display:block;}
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.dash-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:14px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.dash-card.wide{grid-column:span 2;}
+.dash-card.accent::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);}
+.dc-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:6px;}
+.dc-val{font-size:26px;font-weight:700;color:var(--text);line-height:1;font-family:var(--sans);letter-spacing:-0.02em;}
+.dc-val.sm{font-size:18px;}
+.dc-sub{font-size:10px;color:var(--text3);margin-top:4px;}
+.dc-sub strong{color:var(--green);font-weight:600;}
+.dc-sub.neg strong{color:var(--amber);}
+.dc-title{font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.dc-title::after{content:"";flex:1;height:1px;background:var(--border);}
+
+/* Chart (bar) */
+.bar-chart{display:flex;flex-direction:column;gap:8px;}
+.bc-row{display:flex;align-items:center;gap:8px;font-size:12px;}
+.bc-lbl{width:60px;color:var(--text3);font-weight:500;flex-shrink:0;font-size:11px;}
+.bc-bar-wrap{flex:1;background:var(--bg);border-radius:4px;height:18px;overflow:hidden;position:relative;}
+.bc-bar{height:100%;background:var(--red);border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:#fff;font-size:10px;font-weight:600;transition:width 0.6s cubic-bezier(0.2,0.8,0.2,1);}
+.bc-val{color:var(--text2);font-weight:600;min-width:36px;text-align:right;font-size:11px;}
+
+/* Top list */
+.top-list{display:flex;flex-direction:column;gap:4px;}
+.tl-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:6px;background:var(--surface2);font-size:12px;}
+.tl-rank{color:var(--red);font-weight:700;font-size:11px;margin-right:10px;width:18px;flex-shrink:0;}
+.tl-name{flex:1;color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tl-val{color:var(--text3);font-weight:600;margin-left:8px;flex-shrink:0;}
+
+/* Due soon list */
+.due-item{padding:10px 12px;background:var(--surface2);border-radius:6px;margin-bottom:6px;border-left:3px solid var(--amber);cursor:pointer;}
+.due-item.overdue{border-left-color:var(--red);}
+.due-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;}
+.due-cust{font-size:13px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;margin-right:8px;}
+.due-days{font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.05em;flex-shrink:0;}
+.due-days.overdue{color:var(--red);}
+.due-bot{font-size:11px;color:var(--text3);display:flex;justify-content:space-between;}
+
+/* Toast */
+#_t{position:fixed;bottom:calc(78px + var(--sb));left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:8px 16px;border-radius:6px;font-size:11px;z-index:600;white-space:nowrap;max-width:88vw;overflow:hidden;text-overflow:ellipsis;border-left:3px solid var(--red);opacity:0;transition:opacity 0.25s;pointer-events:none;}
+#_t.show{opacity:1;}
+
+/* Settings sheet */
+.set-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:8px;background:var(--surface2);margin-bottom:8px;cursor:pointer;border:1px solid var(--border);}
+.set-item:hover{background:var(--border);}
+.set-icon{display:flex;align-items:center;gap:10px;color:var(--text);font-size:13px;font-weight:500;}
+.set-icon svg{color:var(--text3);}
+.set-danger{color:var(--red);}
+.set-danger svg{color:var(--red);}
+
+/* ═══════════════════════ Home Launcher ═══════════════════════ */
+.home{display:none;}
+.home.show{display:block;animation:fadeIn 0.3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.home-hero{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);color:#fff;border-radius:var(--r2);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;box-shadow:var(--shadow-lg);}
+.home-hero::before{content:"";position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,var(--red) 0%,transparent 70%);opacity:0.3;}
+.home-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);}
+.hh-label{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.15em;text-transform:uppercase;font-weight:500;margin-bottom:4px;position:relative;}
+.hh-greeting{font-size:20px;font-weight:600;color:#fff;line-height:1.25;position:relative;margin-bottom:8px;}
+.hh-greeting span{color:var(--red);font-weight:700;}
+.hh-stats{display:flex;gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);position:relative;}
+.hh-stat{flex:1;min-width:0;}
+.hh-stat-v{font-size:22px;font-weight:700;color:#fff;line-height:1;font-family:var(--sans);letter-spacing:-0.02em;}
+.hh-stat-l{font-size:9px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px;font-weight:500;}
+.hh-stat.alert .hh-stat-v{color:var(--red);}
+
+/* Menu grid */
+.home-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.menu-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:16px 14px;cursor:pointer;display:flex;flex-direction:column;gap:8px;text-align:left;-webkit-tap-highlight-color:transparent;transition:transform 0.12s,box-shadow 0.15s;box-shadow:var(--shadow);position:relative;overflow:hidden;font-family:var(--sans);}
+.menu-tile:active{transform:scale(0.97);}
+.menu-tile::before{content:"";position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--red);}
+.menu-tile.dash-tile::before{background:var(--blue);}
+.menu-tile.recent-tile::before{background:var(--amber);}
+.menu-tile.export-tile::before{background:var(--green);}
+.menu-tile-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--red-light);color:var(--red);flex-shrink:0;}
+.menu-tile.dash-tile .menu-tile-icon{background:var(--blue-bg);color:var(--blue);}
+.menu-tile.recent-tile .menu-tile-icon{background:var(--amber-bg);color:var(--amber);}
+.menu-tile.export-tile .menu-tile-icon{background:var(--green-bg);color:var(--green);}
+.menu-tile-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.25;}
+.menu-tile-desc{font-size:11px;color:var(--text3);line-height:1.35;font-weight:400;}
+.menu-tile-badge{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:0.05em;}
+
+/* Quick actions row */
+.home-quick{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:14px;margin-bottom:14px;box-shadow:var(--shadow);}
+.home-quick-title{font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.home-quick-title::after{content:"";flex:1;height:1px;background:var(--border);}
+.home-quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.quick-btn{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 6px;cursor:pointer;color:var(--text2);-webkit-tap-highlight-color:transparent;transition:all 0.12s;font-family:var(--sans);}
+.quick-btn:active{transform:scale(0.94);}
+.quick-btn:hover{background:var(--border);}
+.quick-btn svg{color:var(--text3);}
+.quick-btn-l{font-size:10px;font-weight:500;color:var(--text3);text-align:center;line-height:1.1;}
+
+/* Recent card */
+.recent-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:14px;margin-bottom:14px;box-shadow:var(--shadow);}
+.recent-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:6px;margin:2px 0;background:var(--surface2);cursor:pointer;}
+.recent-item:hover{background:var(--border);}
+.recent-name{font-size:12px;color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;margin-right:8px;}
+.recent-year{font-size:10px;color:var(--red);font-weight:700;flex-shrink:0;}
+
+/* Animations */
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.shake{animation:shake 0.3s;}
+</style>
+</head>
+<body>
+<!-- ═══════════════════════ Login Screen ═══════════════════════ -->
+<div id="loginScreen">
+  <div class="lg-logo">
+    <div class="lg-logomark">E<span>x</span>ion</div>
+    <div class="lg-sub">Thailand</div>
+    <div class="lg-div"></div>
+  </div>
+  <div class="lg-card">
+    <label class="lg-label">Password</label>
+    <input class="lg-input" id="pwInput" type="password" autocomplete="current-password" placeholder="••••••••" autofocus>
+    <button class="lg-btn" id="loginBtn" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <div class="lg-err" id="loginErr">รหัสผ่านไม่ถูกต้อง</div>
+  </div>
+  <div class="lg-foot">© Exion Thailand · v7.1</div>
+</div>
+
+<!-- ═══════════════════════ Loading ═══════════════════════ -->
+<div id="loading">
+  <div class="ld-logo">
+    <div class="ld-logomark">E<span>x</span>ion</div>
+    <div class="ld-sub-brand">Thailand</div>
+    <div class="ld-divider"></div>
+  </div>
+  <div class="ld-track"><div class="ld-fill" id="ldFill"></div></div>
+  <div class="ld-status" id="ldStatus">Initializing...</div>
+</div>
+
+<!-- ═══════════════════════ Pull-to-refresh ═══════════════════════ -->
+<div id="ptr"><div class="ptr-spinner"></div></div>
+
+<!-- ═══════════════════════ Header ═══════════════════════ -->
+<header class="hdr">
+  <div class="hdr-bar"></div>
+  <div class="hdr-top">
+    <div class="brand">
+      <div>
+        <div class="brand-logo">E<span>x</span>ion</div>
+        <div class="brand-th">Thailand</div>
+      </div>
+    </div>
+    <div class="hdr-actions">
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Theme">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="icon-btn" id="settingsBtn" onclick="openSettings()" title="Settings">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button class="sync-btn" id="syncBtn" onclick="loadAll()">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Sync
+      </button>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <div class="search-field">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" id="searchInput" type="search" placeholder="ค้นหา บริษัท, PO, Model, S/N ..." autocomplete="off" spellcheck="false">
+      <button class="x-btn" id="xBtn" onclick="clearSearch()">&#x2715;</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab on" id="tab-home" onclick="switchTab('home')">Home</button>
+    <button class="tab" id="tab-all" onclick="switchTab('all')">All <span class="tab-n" id="cnt-all">0</span></button>
+    <button class="tab" id="tab-db" onclick="switchTab('db')">Products <span class="tab-n" id="cnt-db">0</span></button>
+    <button class="tab" id="tab-po" onclick="switchTab('po')">PO <span class="tab-n" id="cnt-po">0</span></button>
+    <button class="tab" id="tab-latest" onclick="switchTab('latest')">Shipment 26 <span class="tab-n" id="cnt-latest">0</span></button>
+    <button class="tab" id="tab-dash" onclick="switchTab('dash')">Dashboard</button>
+  </div>
+</header>
+
+<div class="offline-banner" id="offlineBanner">กำลังใช้ข้อมูล offline</div>
+<div class="filter-bar" id="filterBar"></div>
+
+<!-- ═══════════════════════ Content ═══════════════════════ -->
+<div class="content">
+  <div class="home" id="home"></div>
+  <div class="kpis" id="kpis"></div>
+  <div class="info" id="info"></div>
+  <div id="list"></div>
+  <div class="dash" id="dash"></div>
+  <div class="lm" id="lmWrap" style="display:none">
+    <button class="lm-btn" onclick="loadMore()">โหลดเพิ่มเติม</button>
+    <div class="lm-info" id="lmInfo"></div>
+  </div>
+  <div class="sync-time" id="syncTime"></div>
+</div>
+
+<!-- ═══════════════════════ Modals ═══════════════════════ -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="m-top-bar"></div>
+    <div class="m-handle"></div>
+    <div class="m-hdr"><div class="m-title" id="mTitle"></div><button class="m-close" onclick="closeModal()">&#x2715;</button></div>
+    <div class="m-body" id="mBody"></div>
+  </div>
+</div>
+
+<div class="fo" id="fo" onclick="if(event.target===this)closeFO()">
+  <div class="fs">
+    <div class="fs-top"></div>
+    <div class="fs-hdr"><div class="fs-title">กรอง & เรียงลำดับ</div><button class="m-close" onclick="closeFO()">&#x2715;</button></div>
+    <div class="fs-body" id="fsBody"></div>
+    <div class="f-act">
+      <button class="f-clr" onclick="clearFO()">ล้างทั้งหมด</button>
+      <button class="f-apply" onclick="applyFO()">แสดงผลลัพธ์</button>
+    </div>
+  </div>
+</div>
+
+<!-- Settings sheet -->
+<div class="fo" id="setFo" onclick="if(event.target===this)closeSettings()">
+  <div class="fs">
+    <div class="fs-top"></div>
+    <div class="fs-hdr"><div class="fs-title">ตั้งค่า</div><button class="m-close" onclick="closeSettings()">&#x2715;</button></div>
+    <div class="fs-body">
+      <div class="set-item" onclick="toggleTheme();closeSettings()">
+        <div class="set-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <span>เปลี่ยน Theme (Light / Dark)</span>
+        </div>
+      </div>
+      <div class="set-item" onclick="exportAll()">
+        <div class="set-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Export ข้อมูลทั้งหมด (CSV)</span>
+        </div>
+      </div>
+      <div class="set-item" onclick="clearCache()">
+        <div class="set-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          <span>ล้าง Cache (Sync ใหม่)</span>
+        </div>
+      </div>
+      <div class="set-item set-danger" onclick="doLogout()">
+        <div class="set-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>ออกจากระบบ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ Bottom Nav ═══════════════════════ -->
+<nav class="nav">
+  <button class="nb on" id="nav-home" onclick="switchTab('home')">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="nb-l">Home</span>
+  </button>
+  <button class="nb" id="nav-db" onclick="switchTab('db')">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+    <span class="nb-l">Products</span>
+  </button>
+  <button class="nb" id="nav-po" onclick="switchTab('po')">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span class="nb-l">PO</span>
+  </button>
+  <button class="nb" id="nav-latest" onclick="switchTab('latest')">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span class="nb-l">Shipment</span>
+  </button>
+  <button class="nb" id="nav-dash" onclick="switchTab('dash')">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+    <span class="nb-l">Dashboard</span>
+  </button>
+</nav>
+
+<div id="_t"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// App Version & Auto-Update
+// ═══════════════════════════════════════════════════════════════
+const APP_VERSION = "v7.1";
+(function checkVersion(){
+  const stored = localStorage.getItem("ex_version");
+  if(stored && stored !== APP_VERSION){
+    // Version changed — clear all caches to force fresh start
+    console.log("[Exion] Version changed: " + stored + " → " + APP_VERSION + ". Clearing caches...");
+    // Clear data cache (user will re-sync)
+    localStorage.removeItem("ex_db");
+    localStorage.removeItem("ex_po");
+    localStorage.removeItem("ex_up");
+    // Clear Service Worker caches if any
+    if("caches" in window){
+      caches.keys().then(names => names.forEach(n => caches.delete(n)));
+    }
+  }
+  localStorage.setItem("ex_version", APP_VERSION);
+})();
+
+// ═══════════════════════════════════════════════════════════════
+// Config & State
+// ═══════════════════════════════════════════════════════════════
+const API = "https://script.google.com/macros/s/AKfycbw3hpS2bQAoUdUaEBqmCKWa8BfOyI4RBYApqbpEkVlA488y5EIvetyKjfcCHboL_6Gy/exec";
+const API_KEY = "ExionTH-2024-xK9mP3qL";
+const YEARS = ["2020","2021","2022","2023","2024","2025","2026"];
+const BATCH = 30;
+
+const S = {
+  DB: [], PO: [], SHIP: [],
+  fDB: [], fPO: [],
+  tab: "home",
+  shown: BATCH,
+  q: "",
+  fil: { status:[], year:[], supplier:[], sales:[], customer:[] },
+  pFil: { status:[], year:[], supplier:[], sales:[], customer:[] },
+  sort: { field: "", dir: "desc" },
+  pSort: { field: "", dir: "desc" },
+  isOffline: false,
+  token: null,
+  latestYear: null
+};
+
+// ═══════════════════════════════════════════════════════════════
+// Theme
+// ═══════════════════════════════════════════════════════════════
+function initTheme(){
+  const saved = localStorage.getItem("ex_theme");
+  const root = document.documentElement;
+  if(saved === "dark") root.classList.add("dark");
+  else if(saved === "light") root.classList.remove("dark");
+  else root.classList.add("auto-theme");
+}
+function toggleTheme(){
+  const root = document.documentElement;
+  const saved = localStorage.getItem("ex_theme");
+  root.classList.remove("auto-theme");
+  if(saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches)){
+    root.classList.remove("dark");
+    localStorage.setItem("ex_theme","light");
+    toast("Light mode");
+  } else {
+    root.classList.add("dark");
+    localStorage.setItem("ex_theme","dark");
+    toast("Dark mode");
+  }
+}
+initTheme();
+
+// ═══════════════════════════════════════════════════════════════
+// Auth — token-based (backend จะตรวจ password แล้วคืน token)
+// ═══════════════════════════════════════════════════════════════
+async function doLogin(){
+  const pw = document.getElementById("pwInput").value;
+  const btn = document.getElementById("loginBtn");
+  const err = document.getElementById("loginErr");
+  const card = document.querySelector(".lg-card");
+  err.classList.remove("show");
+  if(!pw){ err.textContent="กรุณากรอกรหัสผ่าน"; err.classList.add("show"); return; }
+  btn.disabled = true; btn.textContent = "กำลังตรวจสอบ...";
+  try {
+    const r = await fetch(`${API}?action=login&key=${API_KEY}&password=${encodeURIComponent(pw)}`);
+    const data = await r.json();
+    if(data.ok && data.token){
+      S.token = data.token;
+      localStorage.setItem("ex_token", data.token);
+      localStorage.setItem("ex_token_exp", String(data.expires || 0));
+      document.getElementById("loginScreen").classList.remove("show");
+      bootstrap();
+    } else {
+      throw new Error(data.error || "รหัสผ่านไม่ถูกต้อง");
+    }
+  } catch(e) {
+    err.textContent = e.message.includes("Failed") ? "เชื่อมต่อไม่ได้ — กำลังลองรหัสที่จำไว้" : e.message;
+    err.classList.add("show");
+    card.classList.add("shake"); setTimeout(()=>card.classList.remove("shake"), 300);
+    // Fallback: ตรวจ password แบบ legacy ถ้า backend ยังไม่ได้ deploy
+    if(pw === "+Exion1234"){
+      err.textContent = "เข้าสู่ระบบแบบ offline (กรุณา deploy Apps Script ใหม่)";
+      S.token = "legacy";
+      localStorage.setItem("ex_token","legacy");
+      setTimeout(()=>{
+        document.getElementById("loginScreen").classList.remove("show");
+        bootstrap();
+      }, 800);
+    }
+  } finally {
+    btn.disabled = false; btn.textContent = "เข้าสู่ระบบ";
+  }
+}
+function doLogout(){
+  if(!confirm("ต้องการออกจากระบบ?\nข้อมูลที่ cache ไว้จะถูกลบทั้งหมด")) return;
+  localStorage.removeItem("ex_token");
+  localStorage.removeItem("ex_token_exp");
+  localStorage.removeItem("ex_db");
+  localStorage.removeItem("ex_po");
+  localStorage.removeItem("ex_up");
+  location.reload();
+}
+function checkAuth(){
+  const t = localStorage.getItem("ex_token");
+  const exp = parseInt(localStorage.getItem("ex_token_exp") || "0");
+  if(!t) return false;
+  if(t === "legacy") { S.token = t; return true; }
+  if(exp && Date.now() > exp) { localStorage.removeItem("ex_token"); return false; }
+  S.token = t; return true;
+}
+document.getElementById("pwInput").addEventListener("keydown", e => {
+  if(e.key === "Enter") doLogin();
+});
+
+// ═══════════════════════════════════════════════════════════════
+// API calls
+// ═══════════════════════════════════════════════════════════════
+async function gsheet(name){
+  // พยายามใช้ endpoint ใหม่ (มี token) ถ้าพลาดค่อย fallback
+  const url = S.token && S.token !== "legacy"
+    ? `${API}?action=sheet&sheet=${encodeURIComponent(name)}&key=${API_KEY}&token=${encodeURIComponent(S.token)}`
+    : `${API}?sheet=${encodeURIComponent(name)}&key=${API_KEY}`;
+  const r = await fetch(url);
+  if(!r.ok) throw new Error("HTTP " + r.status);
+  const data = await r.json();
+  if(data && data.error) throw new Error(data.error);
+  return data;
+}
+
+function prog(p, msg){
+  document.getElementById("ldFill").style.width = p + "%";
+  document.getElementById("ldStatus").textContent = msg;
+}
+
+async function loadAll(){
+  document.getElementById("syncBtn").classList.add("spin");
+  prog(5, "Loading Database...");
+  try {
+    S.DB = (await gsheet("Database")).filter(r => r["Company"] || r["Product"]);
+    prog(15, "Database loaded");
+    const res = await Promise.allSettled(YEARS.map((y,i) =>
+      gsheet(y).then(rows => {
+        prog(15 + ((i+1) / YEARS.length * 65), "Loading PO " + y + "...");
+        return rows.map(r => ({ ...r, Year: y }));
+      })
+    ));
+    S.PO = [];
+    res.forEach(r => {
+      if(r.status === "fulfilled") S.PO.push(...r.value.filter(x => x["Customer"] || x["PO No."] || x["ป"]));
+    });
+    S.PO = S.PO.map(r => {
+      if(r["ป"] && !r["PO No."]){ r["PO No."] = r["ป"]; delete r["ป"]; }
+      return r;
+    });
+
+    // Load 2026 shipment status (ไม่ critical — ถ้า fail ก็ไปต่อ)
+    prog(85, "Loading shipment status...");
+    try {
+      S.SHIP = await gsheet("2026 shipment status");
+    } catch(e) {
+      console.warn("[Exion] Shipment sheet not loaded:", e.message);
+      S.SHIP = [];
+    }
+    mergeShipment(); // Merge shipment data into PO
+
+    prog(100, "Complete");
+    buildSearchIndex();
+    computeLatestYear();
+    const now = new Date().toLocaleString("th-TH");
+    localStorage.setItem("ex_db", JSON.stringify(S.DB));
+    localStorage.setItem("ex_po", JSON.stringify(S.PO));
+    localStorage.setItem("ex_ship", JSON.stringify(S.SHIP));
+    localStorage.setItem("ex_up", now);
+    document.getElementById("syncTime").textContent = "อัปเดตล่าสุด: " + now;
+    setOffline(false);
+    setTimeout(hideLd, 500);
+    doSearch();
+    if(S.tab === "home") renderHome(); // update stats on home
+  } catch(e) {
+    console.error(e);
+    fromCache("Sync failed: " + e.message);
+  }
+  document.getElementById("syncBtn").classList.remove("spin");
+}
+
+// ═══════════════════════════════════════════════════════════════
+// mergeShipment — รวมข้อมูล shipment status กับ PO ของปีล่าสุด
+// สำหรับแต่ละ PO: ถ้ามี match ใน SHIP → override Status, Actual, Due Date
+// ═══════════════════════════════════════════════════════════════
+function mergeShipment(){
+  if(!S.SHIP || !S.SHIP.length) return;
+  // สร้าง index จาก SHIP โดย PO No. (normalized)
+  const shipIdx = new Map();
+  S.SHIP.forEach(s => {
+    const po = normVal(s["PO No."] || s["PO No"] || "");
+    if(po){
+      // ถ้ามีหลายรายการต่อ PO เดียวกัน เก็บตัวล่าสุด (row ที่อยู่ล่างสุด override)
+      shipIdx.set(po, s);
+    }
+  });
+  // Merge เข้ากับ PO
+  S.PO.forEach(p => {
+    const poNum = normVal(p["PO No."] || "");
+    if(!poNum) return;
+    const match = shipIdx.get(poNum);
+    if(!match) return;
+    // Override status ถ้า shipment sheet มี status ใหม่
+    if(match["Status"] && String(match["Status"]).trim()){
+      p["Status"] = match["Status"];
+    }
+    // Override Actual ship date
+    if(match["Actual"] && String(match["Actual"]).trim()){
+      p["Actual "] = match["Actual"]; // PO sheet ใช้ "Actual " (มีช่องว่างท้าย)
+    }
+    // ใส่ note ถ้ามี (ให้ดูใน modal)
+    if(match["Note"] && String(match["Note"]).trim()){
+      p["Shipment Note"] = match["Note"];
+    }
+    // ติด flag
+    p._fromShipment = true;
+  });
+}
+
+function fromCache(msg){
+  try {
+    const d = localStorage.getItem("ex_db");
+    const p = localStorage.getItem("ex_po");
+    const s = localStorage.getItem("ex_ship");
+    const u = localStorage.getItem("ex_up");
+    if(d) S.DB = JSON.parse(d);
+    if(p) S.PO = JSON.parse(p);
+    if(s) S.SHIP = JSON.parse(s);
+    // หมายเหตุ: PO ใน cache ได้ merge shipment ไว้แล้วตอน loadAll
+    buildSearchIndex();
+    computeLatestYear();
+    if(u) document.getElementById("syncTime").textContent = "Cache: " + u;
+    setOffline(true);
+    hideLd(); doSearch();
+    if(msg) toast(msg);
+  } catch(e) {
+    document.getElementById("ldStatus").textContent = "ไม่พบ cache — กรุณาเชื่อมต่ออินเทอร์เน็ต";
+  }
+}
+
+function setOffline(yes){
+  S.isOffline = yes;
+  document.getElementById("offlineBanner").classList.toggle("show", yes);
+}
+
+function hideLd(){
+  const el = document.getElementById("loading");
+  el.classList.add("hide");
+  setTimeout(() => el.style.display = "none", 400);
+}
+
+function toast(msg){
+  const t = document.getElementById("_t");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._);
+  t._ = setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Search Index — Pre-compute for speed (5-10x faster)
+// ═══════════════════════════════════════════════════════════════
+function buildSearchIndex(){
+  const idx = r => {
+    r._search = Object.values(r)
+      .filter(v => v !== null && v !== undefined && typeof v !== "object")
+      .join("|").toLowerCase();
+  };
+  S.DB.forEach(idx);
+  S.PO.forEach(r => { idx(r); r._enriched = false; }); // clear enrichment cache
+  _dbIdx = null; // force rebuild
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Utilities
+// ═══════════════════════════════════════════════════════════════
+function esc(s){ return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function fmtDate(s){
+  if(!s) return s;
+  const str = String(s);
+  if(str.includes('T')) return str.split('T')[0];
+  return str;
+}
+function parseDate(s){
+  if(!s) return null;
+  const str = String(s);
+  if(str.includes('T')){ const d = new Date(str); return isNaN(d) ? null : d; }
+  // Try parse DD/MM/YYYY or YYYY-MM-DD
+  const m1 = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m1) return new Date(parseInt(m1[3]), parseInt(m1[2])-1, parseInt(m1[1]));
+  const m2 = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(m2) return new Date(parseInt(m2[1]), parseInt(m2[2])-1, parseInt(m2[3]));
+  const d = new Date(str); return isNaN(d) ? null : d;
+}
+function low(s){ return String(s||"").toLowerCase(); }
+
+function matchQ(row, q){
+  if(!q) return true;
+  const c = row._search || Object.values(row).join("|").toLowerCase();
+  return q.split(" ").filter(Boolean).every(t => c.includes(t));
+}
+
+function applyFil(data){
+  let d = [...data];
+  if(S.tab !== "po" && S.tab !== "all" && S.tab !== "latest") return d;
+  if(S.fil.status.length) d = d.filter(r => {
+    const n = low(r["Status"]);
+    return S.fil.status.some(s => {
+      const sl = low(s);
+      if(sl === "shipped") return n.includes("ship") && !n.includes("late");
+      if(sl === "ship late") return n.includes("late");
+      return n.includes(sl);
+    });
+  });
+  if(S.fil.year.length) d = d.filter(r => S.fil.year.includes(r["Year"]));
+  if(S.fil.supplier.length) d = d.filter(r => S.fil.supplier.includes(r["Supplier"]));
+  if(S.fil.sales.length) d = d.filter(r => S.fil.sales.includes(r["Sales"]));
+  if(S.fil.customer.length) d = d.filter(r => S.fil.customer.includes(r["Customer"]));
+  return d;
+}
+
+function applySort(data, type){
+  if(!S.sort.field) return data;
+  const f = S.sort.field;
+  const dir = S.sort.dir === "asc" ? 1 : -1;
+  const d = [...data];
+  d.sort((a,b) => {
+    let va = a[f], vb = b[f];
+    if(f === "Customer Due" || f === "Factory Due " || f === "Actual "){
+      va = parseDate(va); vb = parseDate(vb);
+      if(!va && !vb) return 0;
+      if(!va) return 1;
+      if(!vb) return -1;
+      return (va - vb) * dir;
+    }
+    if(f === "Year"){
+      return ((parseInt(va)||0) - (parseInt(vb)||0)) * dir;
+    }
+    return String(va||"").localeCompare(String(vb||"")) * dir;
+  });
+  return d;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Search & Filter
+// ═══════════════════════════════════════════════════════════════
+function computeLatestYear(){
+  // หาปีล่าสุดที่มีข้อมูลจริง (แปลงเป็น number เพื่อเรียงถูก)
+  const yearNums = S.PO
+    .map(r => parseInt(String(r["Year"] || "").trim(), 10))
+    .filter(n => !isNaN(n) && n > 1900 && n < 3000);
+  if(!yearNums.length){
+    S.latestYear = String(new Date().getFullYear());
+    return;
+  }
+  const maxYear = Math.max(...yearNums);
+  S.latestYear = String(maxYear);
+}
+
+// Helper: เปรียบเทียบปีโดยไม่สน type (string "2026" === number 2026)
+function sameYear(a, b){
+  return String(a||"").trim() === String(b||"").trim();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// buildShipmentList — แปลง S.SHIP เป็น list ที่ dedupe + enrich
+// ═══════════════════════════════════════════════════════════════
+function buildShipmentList(){
+  if(!S.SHIP || !S.SHIP.length) return [];
+  // Dedupe: เก็บ row ล่าสุด (block ล่างสุด) ของ PO เดียวกัน
+  const byPO = new Map();
+  S.SHIP.forEach(s => {
+    const po = normVal(s["PO No."] || s["PO No"] || "");
+    if(!po) return;
+    byPO.set(po, s); // overwrite → จะเก็บตัวล่างสุด
+  });
+  // Build PO lookup เพื่อ enrich (ใช้ PO No.)
+  const poLookup = new Map();
+  S.PO.forEach(p => {
+    const po = normVal(p["PO No."] || "");
+    if(po) poLookup.set(po, p);
+  });
+  // Enrich each shipment row
+  const list = [];
+  byPO.forEach((s, poNum) => {
+    // Copy shipment fields + fill gaps from PO
+    const merged = { ...s };
+    const origPO = poLookup.get(poNum);
+    if(origPO){
+      // Fill fields ที่ shipment sheet อาจไม่มี
+      if(!merged["Year"]) merged["Year"] = origPO["Year"] || "2026";
+    } else {
+      if(!merged["Year"]) merged["Year"] = "2026"; // default
+    }
+    // เพิ่ม _search index
+    merged._search = Object.values(merged)
+      .filter(v => v !== null && v !== undefined && typeof v !== "object")
+      .join("|").toLowerCase();
+    list.push(merged);
+  });
+  return list;
+}
+
+function doSearch(){
+  S.q = low(document.getElementById("searchInput").value.trim());
+  document.getElementById("xBtn").classList.toggle("show", !!S.q);
+  S.fDB = S.DB.filter(r => matchQ(r, S.q));
+  // สำหรับ tab latest (Shipment 26) — ใช้ข้อมูลจาก S.SHIP โดยตรง
+  let poSource;
+  if(S.tab === "latest"){
+    poSource = buildShipmentList();
+  } else {
+    poSource = S.PO;
+  }
+  S.fPO = applySort(applyFil(poSource.filter(r => matchQ(r, S.q))), "po");
+  S.shown = BATCH;
+  document.getElementById("cnt-db").textContent = S.fDB.length.toLocaleString();
+  // cnt-po = จำนวน PO ทั้งหมด (ไม่จำกัด latest)
+  const allPoCount = S.PO.filter(r => matchQ(r, S.q)).length;
+  document.getElementById("cnt-po").textContent = allPoCount.toLocaleString();
+  // cnt-latest = จำนวน Shipment 2026 unique
+  const shipList = buildShipmentList();
+  const latestCount = shipList.filter(r => matchQ(r, S.q)).length;
+  const latestEl = document.getElementById("cnt-latest");
+  if(latestEl) latestEl.textContent = latestCount.toLocaleString();
+  document.getElementById("cnt-all").textContent = (S.fDB.length + allPoCount).toLocaleString();
+  renderBar(); render();
+}
+
+function clearSearch(){
+  document.getElementById("searchInput").value = "";
+  doSearch();
+}
+
+function switchTab(t){
+  S.tab = t; S.shown = BATCH;
+  ["home","all","db","po","latest","dash"].forEach(x => {
+    const tabEl = document.getElementById("tab-" + x);
+    const navEl = document.getElementById("nav-" + x);
+    if(tabEl) tabEl.classList.toggle("on", x === t);
+    if(navEl) navEl.classList.toggle("on", x === t);
+  });
+  const isHome = t === "home";
+  const isDash = t === "dash";
+  const isList = !isHome && !isDash;
+  document.getElementById("home").classList.toggle("show", isHome);
+  document.getElementById("dash").classList.toggle("show", isDash);
+  document.getElementById("list").style.display = isList ? "" : "none";
+  document.querySelector(".kpis").style.display = isList ? "" : "none";
+  document.getElementById("info").style.display = isList ? "" : "none";
+  document.getElementById("lmWrap").style.display = isList ? "" : "none";
+  // Hide search bar on Home for cleaner look
+  document.querySelector(".search-wrap").style.display = isHome ? "none" : "";
+  if(isHome) {
+    renderHome();
+    document.getElementById("filterBar").style.display = "none";
+  }
+  else if(isDash) {
+    renderDashboard();
+    document.getElementById("filterBar").style.display = "none";
+  }
+  else {
+    // ต้องเรียก doSearch() เพื่อ recompute S.fPO ตาม tab ใหม่
+    // (tab "latest" จะ filter แค่ PO ปีล่าสุด, tab อื่นเอา PO ทั้งหมด)
+    doSearch();
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Filter bar & Filter sheet
+// ═══════════════════════════════════════════════════════════════
+function renderBar(){
+  const bar = document.getElementById("filterBar");
+  if(S.tab === "db" || S.tab === "all" || S.tab === "dash" || S.tab === "home"){
+    bar.innerHTML = ""; bar.style.display = "none"; return;
+  }
+  bar.style.display = "flex";
+  const act = S.fil.status.length + S.fil.year.length + S.fil.supplier.length + S.fil.sales.length + S.fil.customer.length;
+  const sortLabel = S.sort.field ? sortFieldLabel(S.sort.field) + " " + (S.sort.dir === "asc" ? "↑" : "↓") : "";
+  let html = `<button class="chip ${act?"on":""}" onclick="openFO()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+    Filter${act ? " ("+act+")" : ""}</button>`;
+  if(S.tab === "latest"){
+    html += `<span class="chip on">Shipment 2026</span>`;
+  }
+  if(sortLabel){
+    html += `<span class="chip sort-chip" onclick="clearSort()">Sort: ${sortLabel} &#x2715;</span>`;
+  }
+  html += S.fil.status.map(s => `<span class="chip on" onclick="rmFil('status','${s.replace(/'/g,"\\'")}')">${esc(s)} &#x2715;</span>`).join("");
+  html += S.fil.year.map(y => `<span class="chip on" onclick="rmFil('year','${y}')">${y} &#x2715;</span>`).join("");
+  html += S.fil.supplier.map(s => `<span class="chip on" onclick="rmFil('supplier','${s.replace(/'/g,"\\'")}')">${esc(s)} &#x2715;</span>`).join("");
+  html += S.fil.sales.map(s => `<span class="chip on" onclick="rmFil('sales','${s.replace(/'/g,"\\'")}')">${esc(s)} &#x2715;</span>`).join("");
+  html += S.fil.customer.map(c => `<span class="chip on" onclick="rmFil('customer','${c.replace(/'/g,"\\'")}')">${esc(c)} &#x2715;</span>`).join("");
+  bar.innerHTML = html;
+}
+
+function sortFieldLabel(f){
+  return { "Customer Due":"วันครบกำหนด", "Customer":"ลูกค้า", "Supplier":"Supplier", "Year":"ปี", "Status":"สถานะ" }[f] || f;
+}
+
+function rmFil(type, val){
+  S.fil[type] = S.fil[type].filter(v => v !== val);
+  doSearch();
+}
+function clearSort(){ S.sort = { field:"", dir:"desc" }; doSearch(); }
+
+function uniqueVals(key, from){
+  return [...new Set(from.map(r => r[key]).filter(Boolean))].sort((a,b) => String(a).localeCompare(String(b)));
+}
+
+function openFO(){
+  S.pFil = {
+    status: [...S.fil.status], year: [...S.fil.year],
+    supplier: [...S.fil.supplier], sales: [...S.fil.sales],
+    customer: [...S.fil.customer]
+  };
+  S.pSort = { ...S.sort };
+  const suppliers = uniqueVals("Supplier", S.PO).slice(0, 20);
+  const sales = uniqueVals("Sales", S.PO).slice(0, 20);
+  const customers = uniqueVals("Customer", S.PO).slice(0, 20);
+  const sortOpts = [
+    ["Customer Due", "วันครบกำหนด"],
+    ["Customer", "ลูกค้า"],
+    ["Year", "ปี"],
+    ["Status", "สถานะ"]
+  ];
+  let html = "";
+  html += `<div class="fs-sec"><div class="fs-sec-t">เรียงลำดับ</div><div class="fchips">`;
+  sortOpts.forEach(([k,l]) => {
+    const on = S.pSort.field === k;
+    const dir = on ? (S.pSort.dir === "asc" ? " ↑" : " ↓") : "";
+    html += `<button class="fchip sort ${on?"on":""}" onclick="togSort('${k}',this)">${l}${dir}</button>`;
+  });
+  html += `</div></div>`;
+  html += `<div class="fs-sec"><div class="fs-sec-t">Status</div><div class="fchips">
+    ${["Shipped","Ship Late"].map(s =>
+      `<button class="fchip ${S.pFil.status.includes(s)?"on":""}" onclick="togFil('status','${s}',this)">${s}</button>`
+    ).join("")}
+  </div></div>`;
+  html += `<div class="fs-sec"><div class="fs-sec-t">ปี</div><div class="fchips">
+    ${YEARS.map(y =>
+      `<button class="fchip ${S.pFil.year.includes(y)?"on":""}" onclick="togFil('year','${y}',this)">${y}</button>`
+    ).join("")}
+  </div></div>`;
+  if(customers.length){
+    html += `<div class="fs-sec"><div class="fs-sec-t">ลูกค้า (20 อันดับแรก)</div><div class="fchips">
+      ${customers.map(c =>
+        `<button class="fchip ${S.pFil.customer.includes(c)?"on":""}" onclick="togFil('customer',${JSON.stringify(c)},this)">${esc(c).slice(0,40)}</button>`
+      ).join("")}
+    </div></div>`;
+  }
+  if(suppliers.length){
+    html += `<div class="fs-sec"><div class="fs-sec-t">Supplier</div><div class="fchips">
+      ${suppliers.map(s =>
+        `<button class="fchip ${S.pFil.supplier.includes(s)?"on":""}" onclick="togFil('supplier',${JSON.stringify(s)},this)">${esc(s).slice(0,30)}</button>`
+      ).join("")}
+    </div></div>`;
+  }
+  if(sales.length){
+    html += `<div class="fs-sec"><div class="fs-sec-t">Sales</div><div class="fchips">
+      ${sales.map(s =>
+        `<button class="fchip ${S.pFil.sales.includes(s)?"on":""}" onclick="togFil('sales',${JSON.stringify(s)},this)">${esc(s)}</button>`
+      ).join("")}
+    </div></div>`;
+  }
+  document.getElementById("fsBody").innerHTML = html;
+  document.getElementById("fo").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function togFil(type, val, el){
+  const i = S.pFil[type].indexOf(val);
+  if(i > -1){ S.pFil[type].splice(i, 1); el.classList.remove("on"); }
+  else { S.pFil[type].push(val); el.classList.add("on"); }
+}
+
+function togSort(field, el){
+  if(S.pSort.field === field){
+    if(S.pSort.dir === "desc") S.pSort.dir = "asc";
+    else { S.pSort.field = ""; S.pSort.dir = "desc"; }
+  } else {
+    S.pSort.field = field; S.pSort.dir = "desc";
+  }
+  // Refresh the sort section
+  openFO();
+}
+
+function applyFO(){
+  S.fil = { ...S.pFil };
+  S.sort = { ...S.pSort };
+  closeFO();
+  doSearch();
+}
+function clearFO(){
+  S.pFil = { status:[], year:[], supplier:[], sales:[], customer:[] };
+  S.pSort = { field:"", dir:"desc" };
+  openFO();
+}
+function closeFO(){
+  document.getElementById("fo").classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Render
+// ═══════════════════════════════════════════════════════════════
+function hl(text, q){
+  if(!q || !text) return esc(text);
+  let r = esc(String(text));
+  q.split(" ").filter(Boolean).forEach(t => {
+    const lo = r.toLowerCase();
+    let out = "", i = 0;
+    while(i < r.length){
+      const j = lo.indexOf(t, i);
+      if(j < 0){ out += r.slice(i); break; }
+      out += r.slice(i, j) + "<mark>" + r.slice(j, j + t.length) + "</mark>";
+      i = j + t.length;
+    }
+    r = out;
+  });
+  return r;
+}
+
+function bc(s){
+  const n = low(s);
+  return n.includes("ship") && !n.includes("late") ? "b-ok" : n.includes("late") ? "b-late" : "b-other";
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PO Status Badge — 3 รูปแบบตามสถานะ
+//   Shipped (ส่งแล้ว)      → badge เขียว "SHIPPED"
+//   Ship Late (ส่งช้า)      → badge ส้ม "LATE · <Due Date> · +N วัน"
+//   ยังไม่ส่ง / pending    → badge น้ำเงิน "DUE · <Due Date>" (หรือแดงถ้าเลยกำหนดแล้ว)
+// ═══════════════════════════════════════════════════════════════
+// Helper: ดึง Due Date แบบมี fallback (Customer Due → Due Date)
+function getDueDate(row){
+  // ลองค่า Customer Due ก่อน
+  const customerDue = row["Customer Due"];
+  if(customerDue && String(customerDue).trim()) return customerDue;
+  // Fallback ไปที่ Due Date
+  const dueDate = row["Due Date"];
+  if(dueDate && String(dueDate).trim()) return dueDate;
+  return null;
+}
+
+function poBadge(row){
+  const status = row["Status"] || "";
+  const n = low(status);
+  const dueRaw = getDueDate(row);
+  const due = parseDate(dueRaw);
+  const actual = parseDate(row["Actual "] || row["Actual"]);
+
+  // Case 1: Shipped (ไม่ Late)
+  if(n.includes("ship") && !n.includes("late")){
+    return `<span class="bdg b-ok">Shipped</span>`;
+  }
+
+  // Case 2: Ship Late — แสดง Due Date + จำนวนวันที่ล่าช้า
+  if(n.includes("late")){
+    let days = null;
+    if(due && actual){
+      days = Math.floor((actual - due) / (1000*60*60*24));
+    }
+    const dueStr = due ? due.toLocaleDateString("th-TH", { day:"2-digit", month:"2-digit", year:"2-digit" }) : fmtDate(dueRaw) || "—";
+    return `<span class="bdg-date b-late">
+      <span class="bdg-date-top">Ship Late</span>
+      <span class="bdg-date-main">${dueStr}</span>
+      ${days !== null && days > 0 ? `<span class="bdg-date-sub">+${days} วัน</span>` : ""}
+    </span>`;
+  }
+
+  // Case 3: ยังไม่ส่ง — แสดง Due Date
+  if(due){
+    const today = new Date(); today.setHours(0,0,0,0);
+    const diff = Math.floor((due - today) / (1000*60*60*24));
+    const dueStr = due.toLocaleDateString("th-TH", { day:"2-digit", month:"2-digit", year:"2-digit" });
+    if(diff < 0){
+      return `<span class="bdg-date b-overdue">
+        <span class="bdg-date-top">Overdue</span>
+        <span class="bdg-date-main">${dueStr}</span>
+        <span class="bdg-date-sub">เลย ${Math.abs(diff)} วัน</span>
+      </span>`;
+    }
+    return `<span class="bdg-date b-due">
+      <span class="bdg-date-top">Due</span>
+      <span class="bdg-date-main">${dueStr}</span>
+      ${diff <= 30 ? `<span class="bdg-date-sub">อีก ${diff} วัน</span>` : ""}
+    </span>`;
+  }
+
+  // Fallback: มี status อื่น ที่ไม่ใช่ shipped/late และไม่มี due date
+  if(status){
+    return `<span class="bdg ${bc(status)}">${esc(status)}</span>`;
+  }
+  return "";
+}
+
+// Normalize key: lowercase, strip spaces/dots/dashes/underscores/slashes
+function normKey(s){ return String(s||"").toLowerCase().replace(/[\s._\-\/]+/g,""); }
+// Normalize value: strip spaces/dashes/dots (keep digits/letters)
+function normVal(s){ return String(s||"").toLowerCase().replace(/[\s\-._/]+/g,"").trim(); }
+
+// Build DB indices once per data load for fast lookup
+let _dbIdx = null;
+function buildDBIndex(){
+  _dbIdx = { byExion: new Map(), byCust: new Map() };
+  if(!S.DB.length) return;
+  // Detect actual column names from first row
+  const sample = S.DB[0];
+  const keys = Object.keys(sample);
+  const exionKey = keys.find(k => {
+    const n = normKey(k);
+    return n === "exionpo" || n === "exionpono" || n === "pono" || n.includes("exion") && n.includes("po");
+  });
+  const custKey = keys.find(k => {
+    const n = normKey(k);
+    return n === "custrefpo" || n === "customerpo" || n === "custpo" || (n.includes("cust") && n.includes("po"));
+  });
+  const modelKey = keys.find(k => normKey(k) === "model");
+  const snKey = keys.find(k => { const n = normKey(k); return n === "sn" || n === "serial" || n === "serialnumber" || n === "serialno"; });
+  _dbIdx.exionKey = exionKey;
+  _dbIdx.custKey = custKey;
+  _dbIdx.modelKey = modelKey;
+  _dbIdx.snKey = snKey;
+  // Populate indices
+  S.DB.forEach(d => {
+    if(exionKey){
+      const v = normVal(d[exionKey]);
+      if(v){
+        if(!_dbIdx.byExion.has(v)) _dbIdx.byExion.set(v, []);
+        _dbIdx.byExion.get(v).push(d);
+      }
+    }
+    if(custKey){
+      const v = normVal(d[custKey]);
+      if(v){
+        if(!_dbIdx.byCust.has(v)) _dbIdx.byCust.set(v, []);
+        _dbIdx.byCust.get(v).push(d);
+      }
+    }
+  });
+}
+
+// Enrich PO row with Model/SN from DB — flexible matching
+function enrichPO(po){
+  if(po._enriched) return po; // cached
+  po._model = ""; po._sn = ""; po._enriched = true;
+  if(!_dbIdx) buildDBIndex();
+  if(!_dbIdx || !S.DB.length) return po;
+
+  // Collect all possible PO number fields (whatever they're called)
+  const poKeys = Object.keys(po);
+  const poExionCandidates = poKeys.filter(k => {
+    const n = normKey(k);
+    return n === "pono" || n === "exionpo" || n === "exionpono" || (n.includes("exion") && n.includes("po"));
+  });
+  const poCustCandidates = poKeys.filter(k => {
+    const n = normKey(k);
+    return n === "customerpo" || n === "custpo" || n === "custrefpo" || (n.includes("cust") && n.includes("po"));
+  });
+
+  let match = null;
+
+  // Try Exion PO match first
+  for(const k of poExionCandidates){
+    const v = normVal(po[k]);
+    if(v && _dbIdx.byExion.has(v)){
+      match = _dbIdx.byExion.get(v)[0];
+      break;
+    }
+  }
+  // Fallback: Customer PO match
+  if(!match){
+    for(const k of poCustCandidates){
+      const v = normVal(po[k]);
+      if(v && _dbIdx.byCust.has(v)){
+        match = _dbIdx.byCust.get(v)[0];
+        break;
+      }
+    }
+  }
+  // Additional fallback: cross-match (PO's Exion → DB's Cust, and vice versa)
+  if(!match){
+    for(const k of poExionCandidates){
+      const v = normVal(po[k]);
+      if(v && _dbIdx.byCust.has(v)){
+        match = _dbIdx.byCust.get(v)[0];
+        break;
+      }
+    }
+  }
+  if(!match){
+    for(const k of poCustCandidates){
+      const v = normVal(po[k]);
+      if(v && _dbIdx.byExion.has(v)){
+        match = _dbIdx.byExion.get(v)[0];
+        break;
+      }
+    }
+  }
+
+  if(match){
+    po._model = (_dbIdx.modelKey && match[_dbIdx.modelKey]) || "";
+    po._sn = (_dbIdx.snKey && match[_dbIdx.snKey]) || "";
+  }
+  return po;
+}
+
+// Product Chips (S/N, Model) — ใช้ทั้ง Product & PO card
+function productChips(row, showAll){
+  // Find model/SN using flexible key detection
+  const keys = Object.keys(row);
+  const modelKey = keys.find(k => normKey(k) === "model");
+  const snKey = keys.find(k => { const n = normKey(k); return n === "sn" || n === "serial" || n === "serialnumber" || n === "serialno"; });
+  const model = (modelKey ? row[modelKey] : "") || row._model || "";
+  const sn = (snKey ? row[snKey] : "") || row._sn || "";
+  let chips = [];
+  if(model){
+    chips.push(`<span class="pchip"><span class="pchip-label">MODEL</span><span class="pchip-value">${hl(String(model), S.q)}</span></span>`);
+  }
+  if(sn){
+    chips.push(`<span class="pchip"><span class="pchip-label">S/N</span><span class="pchip-value">${hl(String(sn), S.q)}</span></span>`);
+  }
+  if(!chips.length) return "";
+  return `<div class="pchip-row">${chips.join("")}</div>`;
+}
+
+function mkK(v, l){ return `<div class="kpi"><div class="kpi-v">${Number(v).toLocaleString()}</div><div class="kpi-l">${l}</div></div>`; }
+function mkKc(v, l, c){ return `<div class="kpi" style="border-left-color:${c}"><div class="kpi-v" style="color:${c}">${Number(v).toLocaleString()}</div><div class="kpi-l">${l}</div></div>`; }
+function cr(l, v){ return `<div class="cr"><span class="cl">${l}</span><span class="cv">${v}</span></div>`; }
+function crs(l, v){ return `<div class="cr"><span class="cl">${l}</span><span class="cv s">${v}</span></div>`; }
+
+function render(){
+  if(S.tab === "dash" || S.tab === "home") return;
+  const data = S.tab === "db" ? S.fDB : (S.tab === "po" || S.tab === "latest") ? S.fPO
+    : [...S.fDB.map(r => ({ ...r, _type:"db", _orig:r })), ...S.fPO.map(r => ({ ...r, _type:"po", _orig:r }))];
+  const total = data.length;
+  const slice = data.slice(0, S.shown);
+  const kp = document.getElementById("kpis");
+
+  if(S.tab === "all"){
+    const co = [...new Set(S.fDB.map(r => r["Company"]).filter(Boolean))].length;
+    kp.innerHTML = mkK(S.fDB.length, "Products") + mkK(S.fPO.length, "PO Orders") + mkK(co, "บริษัท");
+  } else if(S.tab === "db"){
+    const co = [...new Set(data.map(r => r["Company"]).filter(Boolean))].length;
+    const pr = [...new Set(data.map(r => r["Product"]).filter(Boolean))].length;
+    kp.innerHTML = mkK(total, "รายการ") + mkK(co, "บริษัท") + mkK(pr, "สินค้า");
+  } else if(S.tab === "latest"){
+    const ok = data.filter(r => { const n = low(r["Status"]); return n.includes("ship") && !n.includes("late"); }).length;
+    const lt = data.filter(r => low(r["Status"]).includes("late")).length;
+    const pending = total - ok - lt;
+    kp.innerHTML = mkKc(total, "Shipment 2026", "var(--red)") +
+                   mkKc(ok, "Shipped", "var(--green)") +
+                   mkKc(lt, "Ship Late", "var(--amber)") +
+                   mkK(pending, "รอดำเนินการ");
+  } else {
+    const ok = data.filter(r => { const n = low(r["Status"]); return n.includes("ship") && !n.includes("late"); }).length;
+    const lt = data.filter(r => low(r["Status"]).includes("late")).length;
+    kp.innerHTML = mkK(total, "PO ทั้งหมด") + mkKc(ok, "Shipped", "var(--green)") + mkKc(lt, "Ship Late", "var(--amber)");
+  }
+
+  const headerLabel = S.tab === "latest" ? `<strong>Shipment 2026</strong>` : "";
+  document.getElementById("info").innerHTML = S.q
+    ? `<span>${headerLabel ? headerLabel + " &nbsp;·&nbsp; " : ""}พบ <strong>${total.toLocaleString()}</strong> รายการ &nbsp;·&nbsp; "<strong>${esc(S.q)}</strong>"</span><button class="export-link" onclick="exportResults()">Export CSV</button>`
+    : `<span>${headerLabel ? headerLabel + " &nbsp;·&nbsp; " : "ทั้งหมด "}<strong>${total.toLocaleString()}</strong> รายการ</span>${total > 0 ? '<button class="export-link" onclick="exportResults()">Export CSV</button>' : ''}`;
+
+  const list = document.getElementById("list");
+  if(!total){
+    list.innerHTML = `<div class="empty"><div class="empty-icon">&#128269;</div><h3>ไม่พบข้อมูล</h3><p>ลองค้นหาด้วยคำอื่น หรือล้างตัวกรอง</p></div>`;
+    document.getElementById("lmWrap").style.display = "none";
+    return;
+  }
+  list.innerHTML = S.tab === "db" ? rnDB(slice) : (S.tab === "po" || S.tab === "latest") ? rnPO(slice) : rnAll(slice);
+  const lm = document.getElementById("lmWrap");
+  if(S.shown < total){
+    lm.style.display = "block";
+    document.getElementById("lmInfo").textContent = Math.min(S.shown, total).toLocaleString() + " / " + total.toLocaleString() + " รายการ";
+  } else lm.style.display = "none";
+}
+
+function rnDB(rows){
+  return rows.map((r,i) => {
+    const idx = S.fDB.indexOf(r);
+    const company = r["Company"] ? hl(r["Company"], S.q) : "";
+    const chips = productChips(r, false);
+    return `<div class="card" onclick="opDB(${idx})">
+      <div class="card-accent"></div>
+      <div class="card-top">
+        <div class="card-name">${hl(r["Product"], S.q) || "—"}${r["Detail"] ? ` · <span style="font-weight:400;color:var(--text3)">${hl(r["Detail"], S.q)}</span>` : ""}</div>
+        <div class="card-meta">
+          ${company ? `<span class="quick-link" onclick="event.stopPropagation();quickSearch('${String(r["Company"]).replace(/'/g,"\\'")}')">${company}</span>` : ""}
+        </div>
+        ${chips}
+      </div>
+      <div class="card-rows">
+        ${r["Exion P.O."] ? cr("Exion PO", hl(r["Exion P.O."], S.q)) : ""}
+        ${r["Cust. Ref. PO."] ? cr("Cust. PO", hl(r["Cust. Ref. PO."], S.q)) : ""}
+        ${r["QTY"] ? cr("QTY", hl(String(r["QTY"]), S.q)) : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function rnPO(rows){
+  return rows.map((r,i) => {
+    const idx = S.fPO.indexOf(r);
+    enrichPO(r);
+    const customer = r["Customer"] ? hl(r["Customer"], S.q) : "";
+    const badge = poBadge(r);
+    // Build PO row with Model/SN enriched from DB
+    const modelSN = { MODEL: r._model, "S/N": r._sn };
+    const chips = productChips(modelSN, false);
+    return `<div class="card" onclick="opPO(${idx})">
+      <div class="card-accent"></div>
+      <div class="card-top">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <div class="card-name" style="flex:1">
+            ${customer ? `<span class="quick-link" onclick="event.stopPropagation();quickSearch('${String(r["Customer"]).replace(/'/g,"\\'")}')">${customer}</span>` : "—"}
+          </div>
+          ${badge}
+        </div>
+        <div class="card-meta">
+          <span>${hl(r["Supplier"], S.q) || "—"}</span>
+          <span class="dot">·</span>
+          <span style="color:var(--red);font-weight:600">${r["Year"] || ""}</span>
+        </div>
+        ${chips}
+      </div>
+      <div class="card-rows">
+        ${r["PO No."] ? cr("PO No.", hl(r["PO No."], S.q)) : ""}
+        ${r["Customer PO"] ? cr("Customer PO", hl(r["Customer PO"], S.q)) : ""}
+        ${r["Sales"] ? crs("Sales", hl(r["Sales"], S.q)) : ""}
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function rnAll(rows){
+  return rows.map(r => {
+    if(r._type === "db"){
+      const i = S.fDB.indexOf(r._orig);
+      const chips = productChips(r, false);
+      return `<div class="card" onclick="opDB(${i})">
+        <div class="card-accent"></div>
+        <div class="card-top">
+          <div style="margin-bottom:4px"><span style="font-size:9px;background:var(--red);color:#fff;padding:2px 8px;border-radius:3px;font-weight:600;letter-spacing:0.05em;">PRODUCT</span></div>
+          <div class="card-name">${hl(r["Company"], S.q) || "—"}</div>
+          <div class="card-meta">${hl(r["Product"], S.q) || ""}${r["Detail"] ? ` <span class="dot">·</span> ${hl(r["Detail"], S.q)}` : ""}</div>
+          ${chips}
+        </div>
+        <div class="card-rows">
+          ${r["Exion P.O."] ? cr("Exion PO", hl(r["Exion P.O."], S.q)) : ""}
+          ${r["Cust. Ref. PO."] ? cr("Cust. PO", hl(r["Cust. Ref. PO."], S.q)) : ""}
+        </div>
+      </div>`;
+    } else {
+      const i = S.fPO.indexOf(r._orig);
+      enrichPO(r._orig);
+      const badge = poBadge(r._orig);
+      const modelSN = { MODEL: r._orig._model, "S/N": r._orig._sn };
+      const chips = productChips(modelSN, false);
+      return `<div class="card" onclick="opPO(${i})">
+        <div class="card-accent" style="background:var(--dark)"></div>
+        <div class="card-top">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px">
+            <span style="font-size:9px;background:var(--dark);color:#fff;padding:2px 8px;border-radius:3px;font-weight:600;letter-spacing:0.05em;">PO ${r["Year"]||""}</span>
+            ${badge}
+          </div>
+          <div class="card-name">${hl(r["Customer"], S.q) || "—"}</div>
+          <div class="card-meta">${hl(r["Supplier"], S.q) || "—"}</div>
+          ${chips}
+        </div>
+        <div class="card-rows">
+          ${r["PO No."] ? cr("PO No.", hl(r["PO No."], S.q)) : ""}
+          ${r["Customer PO"] ? cr("Customer PO", hl(r["Customer PO"], S.q)) : ""}
+        </div>
+      </div>`;
+    }
+  }).join("");
+}
+
+function loadMore(){ S.shown += BATCH; render(); }
+
+// Quick search — คลิกชื่อลูกค้า/บริษัทแล้ว filter อัตโนมัติ
+function quickSearch(term){
+  document.getElementById("searchInput").value = term;
+  doSearch();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Modals (Detail)
+// ═══════════════════════════════════════════════════════════════
+function opDB(i){
+  const r = S.fDB[i]; if(!r) return;
+  document.getElementById("mTitle").textContent = (r["Product"] ? r["Product"] + (r["Detail"] ? " · " + r["Detail"] : "") : r["Company"]) || "Product Detail";
+  const fields = [
+    ["Product","Product",true],["Detail","Detail",true],["Model","MODEL",false],["S/N","S/N",false],
+    ["QTY","QTY",false],["COO","COO",false],["Exion P.O.","Exion P.O.",false],["Cust. Ref. PO.","Cust. Ref. PO.",false],
+    ["Cost (USD/EA)","Cost (Our PO)/ EA (USD)",false],["Sales (Baht/EA)","Sales amount (Baht) / EA",false],
+    ["Ship From","SHIP FROM FACTORY",true],["Deliver To","DELIVER TO CUSTOMER",true],
+    ["Warranty","WARANTY",true],["Service","SERVICE",true],["End User","END USER",true],
+    ["Location","LOCATION",true],["Contact","CONTACT",true]
+  ];
+  const rows = fields.filter(([,k]) => r[k] && String(r[k]).trim())
+    .map(([l,k,t]) => `<div class="m-row"><span class="m-lbl">${l}</span><span class="m-val${t?" t":""}">${esc(r[k])}</span></div>`).join("");
+  const companyLink = r["Company"] ? `<div style="margin-bottom:14px"><button class="export-link" onclick="closeModal();quickSearch('${String(r["Company"]).replace(/'/g,"\\'")}')">&#128269; ดูสินค้าทั้งหมดของ ${esc(r["Company"])}</button></div>` : "";
+  document.getElementById("mBody").innerHTML = companyLink + `<div class="m-sec"><div class="m-sec-t">ข้อมูลสินค้า</div>${rows || "<p style='color:var(--text4);font-size:12px'>ไม่มีข้อมูลเพิ่มเติม</p>"}</div>`;
+  document.getElementById("overlay").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function opPO(i){
+  const r = S.fPO[i]; if(!r) return;
+  enrichPO(r);
+  document.getElementById("mTitle").textContent = r["Customer"] || "PO Detail";
+  const dateFields = ["Customer Due","Due Date","Factory Due ","Actual "];
+  const fields = [
+    ["PO No.","PO No."],["ปี","Year"],["Supplier","Supplier"],["Customer","Customer"],
+    ["Customer PO","Customer PO"],["Job No.","Job"],["Sales","Sales"],["Code","Code"],
+    ["Freight","Freight"],["Actual Cost","Actual"],["Weight","Weight"],
+    ["Customer Due","Customer Due"],["Due Date","Due Date"],["Factory Due","Factory Due "],["Actual Ship","Actual "],
+    ["Remark","Remark"],["Shipment Note","Shipment Note"]
+  ];
+  const rows = fields.filter(([,k]) => r[k] && String(r[k]).trim())
+    .map(([l,k]) => `<div class="m-row"><span class="m-lbl">${l}</span><span class="m-val">${esc(dateFields.includes(k) ? fmtDate(r[k]) : r[k])}</span></div>`).join("");
+  const custLink = r["Customer"] ? `<div style="margin-bottom:14px"><button class="export-link" onclick="closeModal();quickSearch('${String(r["Customer"]).replace(/'/g,"\\'")}')">&#128269; ดู PO ทั้งหมดของ ${esc(r["Customer"])}</button></div>` : "";
+  // Model/SN section (ถ้ามี)
+  let productSection = "";
+  if(r._model || r._sn){
+    const mrows = [];
+    if(r._model) mrows.push(`<div class="m-row"><span class="m-lbl">Model</span><span class="m-val">${esc(r._model)}</span></div>`);
+    if(r._sn) mrows.push(`<div class="m-row"><span class="m-lbl">S/N</span><span class="m-val">${esc(r._sn)}</span></div>`);
+    productSection = `<div class="m-sec"><div class="m-sec-t">ข้อมูลสินค้า</div>${mrows.join("")}</div>`;
+  }
+  const badge = poBadge(r);
+  document.getElementById("mBody").innerHTML = custLink +
+    `<div class="m-sec"><div class="m-sec-t">สถานะ</div>${badge || "<span style='color:var(--text4);font-size:12px'>ไม่ระบุ</span>"}</div>` +
+    productSection +
+    `<div class="m-sec"><div class="m-sec-t">รายละเอียด PO</div>${rows}</div>`;
+  document.getElementById("overlay").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+  document.getElementById("overlay").classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Dashboard
+// ═══════════════════════════════════════════════════════════════
+function renderDashboard(){
+  const dash = document.getElementById("dash");
+  const currentYear = new Date().getFullYear();
+  const prevYear = currentYear - 1;
+  const poCurrent = S.PO.filter(r => parseInt(r["Year"]) === currentYear);
+  const poPrev = S.PO.filter(r => parseInt(r["Year"]) === prevYear);
+
+  const totalPO = S.PO.length;
+  const totalDB = S.DB.length;
+  const totalShipped = S.PO.filter(r => { const n = low(r["Status"]); return n.includes("ship") && !n.includes("late"); }).length;
+  const totalLate = S.PO.filter(r => low(r["Status"]).includes("late")).length;
+  const lateRate = totalPO ? ((totalLate / totalPO) * 100).toFixed(1) : 0;
+
+  const poByYear = {};
+  S.PO.forEach(r => {
+    const y = r["Year"];
+    if(!poByYear[y]) poByYear[y] = 0;
+    poByYear[y]++;
+  });
+  const yearEntries = Object.entries(poByYear).sort((a,b) => a[0].localeCompare(b[0]));
+  const maxYearCount = Math.max(...Object.values(poByYear), 1);
+
+  const customerCounts = {};
+  S.PO.forEach(r => {
+    const c = r["Customer"];
+    if(c){ customerCounts[c] = (customerCounts[c] || 0) + 1; }
+  });
+  const topCustomers = Object.entries(customerCounts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+
+  const supplierCounts = {};
+  S.PO.forEach(r => {
+    const s = r["Supplier"];
+    if(s){ supplierCounts[s] = (supplierCounts[s] || 0) + 1; }
+  });
+  const topSuppliers = Object.entries(supplierCounts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+
+  // Due soon / overdue
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const dueSoon = [];
+  S.PO.forEach(r => {
+    const s = low(r["Status"]);
+    if(s.includes("ship") && !s.includes("late")) return; // shipped แล้ว
+    const due = parseDate(getDueDate(r));
+    if(!due) return;
+    const diffDays = Math.floor((due - today) / (1000*60*60*24));
+    if(diffDays <= 30) dueSoon.push({ r, days: diffDays, due });
+  });
+  dueSoon.sort((a,b) => a.days - b.days);
+  const dueSoonTop = dueSoon.slice(0, 8);
+
+  const yoyDiff = poCurrent.length - poPrev.length;
+  const yoyPct = poPrev.length ? ((yoyDiff / poPrev.length) * 100).toFixed(0) : 0;
+
+  let html = `<div class="dash-grid">
+    <div class="dash-card accent">
+      <div class="dc-lbl">PO ปี ${currentYear}</div>
+      <div class="dc-val">${poCurrent.length.toLocaleString()}</div>
+      <div class="dc-sub ${yoyDiff >= 0 ? "" : "neg"}">
+        ${yoyDiff >= 0 ? "▲" : "▼"} <strong>${Math.abs(yoyDiff)}</strong> vs ${prevYear} (${yoyDiff >= 0 ? "+" : ""}${yoyPct}%)
+      </div>
+    </div>
+    <div class="dash-card accent">
+      <div class="dc-lbl">Ship Late Rate</div>
+      <div class="dc-val" style="color:${lateRate > 10 ? "var(--amber)" : "var(--green)"}">${lateRate}%</div>
+      <div class="dc-sub">${totalLate.toLocaleString()} จาก ${totalPO.toLocaleString()} รายการ</div>
+    </div>
+    <div class="dash-card">
+      <div class="dc-lbl">Products</div>
+      <div class="dc-val sm">${totalDB.toLocaleString()}</div>
+      <div class="dc-sub">ในฐานข้อมูล</div>
+    </div>
+    <div class="dash-card">
+      <div class="dc-lbl">Shipped</div>
+      <div class="dc-val sm" style="color:var(--green)">${totalShipped.toLocaleString()}</div>
+      <div class="dc-sub">จัดส่งแล้ว</div>
+    </div>
+  </div>`;
+
+  // PO by year chart
+  html += `<div class="dash-card wide" style="margin-bottom:14px;">
+    <div class="dc-title">PO แต่ละปี</div>
+    <div class="bar-chart">
+      ${yearEntries.map(([y, c]) => {
+        const pct = (c / maxYearCount * 100).toFixed(1);
+        return `<div class="bc-row">
+          <div class="bc-lbl">${y}</div>
+          <div class="bc-bar-wrap"><div class="bc-bar" style="width:${pct}%"></div></div>
+          <div class="bc-val">${c.toLocaleString()}</div>
+        </div>`;
+      }).join("")}
+    </div>
+  </div>`;
+
+  // Top customers
+  if(topCustomers.length){
+    html += `<div class="dash-card wide" style="margin-bottom:14px;">
+      <div class="dc-title">Top 5 ลูกค้า</div>
+      <div class="top-list">
+        ${topCustomers.map(([name, count], i) => `
+          <div class="tl-item" onclick="switchTab('po');quickSearch('${String(name).replace(/'/g,"\\'")}')">
+            <span class="tl-rank">#${i+1}</span>
+            <span class="tl-name">${esc(name)}</span>
+            <span class="tl-val">${count} PO</span>
+          </div>
+        `).join("")}
+      </div>
+    </div>`;
+  }
+
+  // Top suppliers
+  if(topSuppliers.length){
+    html += `<div class="dash-card wide" style="margin-bottom:14px;">
+      <div class="dc-title">Top 5 Suppliers</div>
+      <div class="top-list">
+        ${topSuppliers.map(([name, count], i) => `
+          <div class="tl-item" onclick="switchTab('po');quickSearch('${String(name).replace(/'/g,"\\'")}')">
+            <span class="tl-rank">#${i+1}</span>
+            <span class="tl-name">${esc(name)}</span>
+            <span class="tl-val">${count} PO</span>
+          </div>
+        `).join("")}
+      </div>
+    </div>`;
+  }
+
+  // Due soon
+  if(dueSoonTop.length){
+    html += `<div class="dash-card wide">
+      <div class="dc-title">⚠ ใกล้ครบกำหนด (30 วัน)</div>
+      ${dueSoonTop.map(({r, days, due}) => {
+        const overdue = days < 0;
+        const i = S.PO.indexOf(r);
+        return `<div class="due-item ${overdue?"overdue":""}" onclick="openPoFromDash(${i})">
+          <div class="due-top">
+            <div class="due-cust">${esc(r["Customer"]||"—")}</div>
+            <div class="due-days ${overdue?"overdue":""}">${overdue ? "เลย " + Math.abs(days) + " วัน" : days === 0 ? "วันนี้" : "อีก " + days + " วัน"}</div>
+          </div>
+          <div class="due-bot">
+            <span>${esc(r["PO No."]||"")}</span>
+            <span>${due.toLocaleDateString("th-TH")}</span>
+          </div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }
+
+  dash.innerHTML = html;
+  // Animate bars
+  setTimeout(() => {
+    dash.querySelectorAll(".bc-bar").forEach(b => {
+      const w = b.style.width; b.style.width = "0"; setTimeout(() => b.style.width = w, 50);
+    });
+  }, 50);
+}
+
+function openPoFromDash(globalIdx){
+  // Switch to PO tab and open modal
+  S.tab = "po";
+  S.fPO = [...S.PO]; // reset filter so index stays valid
+  const targetRow = S.PO[globalIdx];
+  const i = S.fPO.indexOf(targetRow);
+  switchTab("po");
+  setTimeout(() => opPO(i), 100);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Home — Launcher Page (รวม shortcut ทุก function)
+// ═══════════════════════════════════════════════════════════════
+function renderHome(){
+  const home = document.getElementById("home");
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? "สวัสดีตอนเช้า" : hour < 17 ? "สวัสดีตอนบ่าย" : "สวัสดีตอนเย็น";
+
+  const latestPO = S.PO.filter(r => sameYear(r["Year"], S.latestYear));
+  const totalPO = S.PO.length;
+  const totalLate = S.PO.filter(r => low(r["Status"]).includes("late")).length;
+  const shipmentList = buildShipmentList();
+  const shipmentCount = shipmentList.length;
+
+  // Due soon count (ภายใน 30 วัน, ยังไม่ ship)
+  const today = new Date(); today.setHours(0,0,0,0);
+  let dueSoonCount = 0, overdueCount = 0;
+  S.PO.forEach(r => {
+    const s = low(r["Status"]);
+    if(s.includes("ship") && !s.includes("late")) return;
+    const due = parseDate(getDueDate(r));
+    if(!due) return;
+    const diff = Math.floor((due - today) / (1000*60*60*24));
+    if(diff < 0) overdueCount++;
+    else if(diff <= 30) dueSoonCount++;
+  });
+
+  // ดึง PO ล่าสุด 5 รายการตามวันที่ (หรือจากด้านบน-ล่าง)
+  const recentPO = [...latestPO].slice(-5).reverse();
+  // Recent shipment (5 ล่าสุดจาก shipment list)
+  const recentShipment = shipmentList.slice(-5).reverse();
+
+  let html = "";
+
+  // Hero card — greeting + quick stats
+  html += `<div class="home-hero">
+    <div class="hh-label">Exion Thailand · v7.1</div>
+    <div class="hh-greeting">${greet} <span>ครับ</span></div>
+    <div class="hh-stats">
+      <div class="hh-stat">
+        <div class="hh-stat-v">${S.DB.length.toLocaleString()}</div>
+        <div class="hh-stat-l">Products</div>
+      </div>
+      <div class="hh-stat">
+        <div class="hh-stat-v">${totalPO.toLocaleString()}</div>
+        <div class="hh-stat-l">PO ทั้งหมด</div>
+      </div>
+      <div class="hh-stat ${overdueCount > 0 ? "alert" : ""}">
+        <div class="hh-stat-v">${overdueCount + dueSoonCount}</div>
+        <div class="hh-stat-l">ใกล้/เลยกำหนด</div>
+      </div>
+    </div>
+  </div>`;
+
+  // Main menu tiles — 4 หลัก
+  html += `<div class="home-menu">
+    <button class="menu-tile" onclick="switchTab('db')">
+      <div class="menu-tile-icon">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <div class="menu-tile-title">Products</div>
+      <div class="menu-tile-desc">ฐานข้อมูลสินค้า ${S.DB.length.toLocaleString()} รายการ</div>
+    </button>
+
+    <button class="menu-tile" onclick="switchTab('po')">
+      <div class="menu-tile-icon">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="menu-tile-title">PO Orders</div>
+      <div class="menu-tile-desc">ใบสั่งซื้อทั้งหมด ${totalPO.toLocaleString()} รายการ</div>
+    </button>
+
+    <button class="menu-tile recent-tile" onclick="switchTab('latest')">
+      <div class="menu-tile-icon">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      </div>
+      <div class="menu-tile-badge">ใหม่</div>
+      <div class="menu-tile-title">Shipment 2026</div>
+      <div class="menu-tile-desc">ติดตามสถานะ · ${shipmentCount.toLocaleString()} รายการ</div>
+    </button>
+
+    <button class="menu-tile dash-tile" onclick="switchTab('dash')">
+      <div class="menu-tile-icon">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+      </div>
+      <div class="menu-tile-title">Dashboard</div>
+      <div class="menu-tile-desc">สถิติ & รายงาน</div>
+    </button>
+  </div>`;
+
+  // Quick actions row
+  html += `<div class="home-quick">
+    <div class="home-quick-title">Quick Actions</div>
+    <div class="home-quick-grid">
+      <button class="quick-btn" onclick="switchTab('all');setTimeout(()=>document.getElementById('searchInput').focus(),100)">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <div class="quick-btn-l">ค้นหา<br>ทั้งหมด</div>
+      </button>
+      <button class="quick-btn" onclick="loadAll()">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <div class="quick-btn-l">Sync<br>ข้อมูล</div>
+      </button>
+      <button class="quick-btn" onclick="exportAll()">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <div class="quick-btn-l">Export<br>ทั้งหมด</div>
+      </button>
+      <button class="quick-btn" onclick="openSettings()">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <div class="quick-btn-l">ตั้งค่า</div>
+      </button>
+    </div>
+  </div>`;
+
+  // Recent Shipment (5 ล่าสุด)
+  if(recentShipment.length){
+    html += `<div class="recent-card">
+      <div class="home-quick-title">Shipment ล่าสุด</div>
+      ${recentShipment.map(r => {
+        return `<div class="recent-item" onclick="switchTab('latest');setTimeout(()=>quickSearch('${String(r["PO No."]||"").replace(/'/g,"\\'")}'),100)">
+          <span class="recent-name">${esc(r["Customer"] || r["PO No."] || "—")}</span>
+          <span class="recent-year">${esc(r["PO No."] || "")}</span>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }
+
+  // Sync info footer
+  const u = localStorage.getItem("ex_up");
+  if(u){
+    html += `<div class="sync-time">อัปเดตล่าสุด: ${u}</div>`;
+  }
+
+  home.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Export CSV
+// ═══════════════════════════════════════════════════════════════
+function toCSV(rows){
+  if(!rows.length) return "";
+  // Always skip internal fields starting with _
+  const headers = [...new Set(rows.flatMap(r => Object.keys(r).filter(k => !k.startsWith("_"))))];
+  const esc = v => {
+    if(v === null || v === undefined) return "";
+    let s = String(v); if(s.includes('T') && !isNaN(new Date(s))) s = fmtDate(s);
+    if(s.includes(",") || s.includes('"') || s.includes("\n")) s = '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  };
+  return headers.join(",") + "\n" + rows.map(r => headers.map(h => esc(r[h])).join(",")).join("\n");
+}
+
+function downloadCSV(filename, csv){
+  const bom = "\uFEFF"; // UTF-8 BOM for Excel compatibility
+  const blob = new Blob([bom + csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+}
+
+function exportResults(){
+  const data = S.tab === "db" ? S.fDB : S.tab === "po" ? S.fPO
+    : [...S.fDB, ...S.fPO];
+  if(!data.length){ toast("ไม่มีข้อมูลให้ export"); return; }
+  const stamp = new Date().toISOString().slice(0,10);
+  const name = `exion_${S.tab}_${stamp}.csv`;
+  downloadCSV(name, toCSV(data));
+  toast(`Export สำเร็จ: ${data.length} รายการ`);
+}
+
+function exportAll(){
+  const stamp = new Date().toISOString().slice(0,10);
+  downloadCSV(`exion_database_${stamp}.csv`, toCSV(S.DB));
+  setTimeout(() => downloadCSV(`exion_po_${stamp}.csv`, toCSV(S.PO)), 500);
+  toast(`Export ${S.DB.length} + ${S.PO.length} รายการ`);
+  closeSettings();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Settings
+// ═══════════════════════════════════════════════════════════════
+function openSettings(){
+  document.getElementById("setFo").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+function closeSettings(){
+  document.getElementById("setFo").classList.remove("show");
+  document.body.style.overflow = "";
+}
+function clearCache(){
+  if(!confirm("ล้าง cache และ sync ใหม่?")) return;
+  localStorage.removeItem("ex_db");
+  localStorage.removeItem("ex_po");
+  localStorage.removeItem("ex_up");
+  closeSettings();
+  loadAll();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Pull-to-refresh
+// ═══════════════════════════════════════════════════════════════
+(function initPTR(){
+  let startY = 0, pulling = false, pulled = 0;
+  const THRESHOLD = 70;
+  document.addEventListener("touchstart", e => {
+    if(window.scrollY > 0) return;
+    startY = e.touches[0].clientY;
+    pulling = true;
+  }, { passive: true });
+  document.addEventListener("touchmove", e => {
+    if(!pulling) return;
+    pulled = e.touches[0].clientY - startY;
+    if(pulled > 20 && window.scrollY === 0){
+      document.getElementById("ptr").classList.add("show");
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", () => {
+    if(pulling && pulled > THRESHOLD && window.scrollY === 0 && !document.getElementById("syncBtn").classList.contains("spin")){
+      loadAll();
+    }
+    setTimeout(() => document.getElementById("ptr").classList.remove("show"), 300);
+    pulling = false; pulled = 0;
+  }, { passive: true });
+})();
+
+// ═══════════════════════════════════════════════════════════════
+// Search input — debounced
+// ═══════════════════════════════════════════════════════════════
+let deb;
+document.getElementById("searchInput").addEventListener("input", () => {
+  clearTimeout(deb);
+  deb = setTimeout(doSearch, 180);
+});
+
+// ═══════════════════════════════════════════════════════════════
+// Bootstrap
+// ═══════════════════════════════════════════════════════════════
+
+function bootstrap(){
+  // Try to use cached data first for fast startup
+  const cc = localStorage.getItem("ex_db");
+  if(cc){
+    try {
+      S.DB = JSON.parse(cc);
+      S.PO = JSON.parse(localStorage.getItem("ex_po") || "[]");
+      S.SHIP = JSON.parse(localStorage.getItem("ex_ship") || "[]");
+      buildSearchIndex();
+      computeLatestYear();
+      const u = localStorage.getItem("ex_up");
+      if(u) document.getElementById("syncTime").textContent = "Cache: " + u;
+      hideLd();
+      doSearch();
+      switchTab("home"); // แสดง Home เป็นหน้าแรก
+    } catch(e) {}
+  }
+  loadAll();
+}
+
+if(!checkAuth()){
+  document.getElementById("loginScreen").classList.add("show");
+  document.getElementById("loading").style.display = "none";
+} else {
+  bootstrap();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Clean up old Service Workers (ถ้าเคยมี) - กันคอมเก่าที่เคย register
+// ═══════════════════════════════════════════════════════════════
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>
